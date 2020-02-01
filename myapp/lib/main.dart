@@ -82,7 +82,7 @@ class Home extends StatelessWidget {
                   Icons.account_balance,
                   color: Colors.grey[400],
                 ),
-                SizedBox(width: 248.0),
+                SizedBox(width: 240.0),
                 Text(
                     "Shopping",
                     style: TextStyle(
