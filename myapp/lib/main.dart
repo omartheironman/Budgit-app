@@ -1,19 +1,50 @@
+
 import 'package:flutter/material.dart';
+import 'Pages/budgets.dart';
+import 'Pages/AddBudget.dart';
+import 'Pages/NewBudget.dart';
 
 void main() => runApp(MaterialApp(
   //open up Material widget
 
-  home: Home(),
+  initialRoute: '/',
+  routes: {
+    '/': (context) => Home(),
+    '/budgeter' : (context) => Budgeter(),
+    '/AddNew'  : (context) => AddNewBudget()
 
+  },
 
 ));
 
 
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
+
+  _HomeState createState() => _HomeState();
+
+}
+
+class _HomeState extends State<Home> {
+
+
+
+
+      List<Budgets> budgets= [
+        Budgets(text:'Shopping',value:'500'),
+        Budgets(text:'Car',value:'200'),
+        Budgets(text:'Dog',value:'300'),
+
+      ];
+
+
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
 
       backgroundColor: Colors.grey[900],
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -25,8 +56,12 @@ class Home extends StatelessWidget {
       ),
 
 
+
+
       body: Padding(
-        padding: const EdgeInsets.fromLTRB(30.0, 40.0, 30.0, 0.0),
+
+         padding: const EdgeInsets.fromLTRB(30.0, 40.0, 30.0, 0.0),
+
         child: Column(
 
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -73,215 +108,67 @@ class Home extends StatelessWidget {
                 )
             ),
 
-            SizedBox(height: 24.0),
+            SizedBox(height: 40.0),
 
-            Row(
-              children: <Widget>[
-                Icon(
-                  //Icons.email,
-                  Icons.account_balance,
-                  color: Colors.grey[400],
-                ),
-                SizedBox(width: 240.0),
-                Text(
-                    "Shopping",
-                    style: TextStyle(
-                        color: Colors.grey,
-                        letterSpacing: 2.0,
-                        fontSize: 15.0,
-                    )
-                ),
-              ]
-            ),
+            Column(
+
+
+              children:
+
+
+              budgets.map((budgets) => BudgetsWidgets(
+
+                  bdg: budgets,
+                  delete: (){
+                    setState(() {
+
+                    this.budgets.remove(budgets);
+
+
+                    });
+                  }
+
+              )).toList(),
+
+            )
+
+
+            //############Function end#################
+
+
+
+
+
+
+
+
+            //############SECOND ENTRY#################
+
+
             //SizedBox(height: 10.0), //Sized Box
-            Row(
-                children: <Widget>[
-                  SizedBox(width: 290.0),
 
-                  Text(
-                      "\$100",
-                      style: TextStyle(
-                          color: Colors.greenAccent,
-                          letterSpacing: 2.0,
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.bold
-                      )
-                  ),
-                ]
-            ),
-            SizedBox(height: 10.0), //Sized Box
+//            Column (
+//                mainAxisAlignment: MainAxisAlignment.end,
+//               // crossAxisAlignment: CrossAxisAlignment.end,
+//
+//                children: <Widget>[
+//                 // SizedBox(width: 290.0),
+//
+//                  Text(
+//                      "\$100",
+//                      style: TextStyle(
+//                          color: Colors.greenAccent,
+//                          letterSpacing: 2.0,
+//                          fontSize: 20.0,
+//                          fontWeight: FontWeight.bold
+//                      )
+//                  ),
+//
+//
+//                ]
+//            ),
+            //SizedBox(height: 10.0), //Sized Box
 
-            Row(
-                children: <Widget>[
-                  Icon(
-                    //Icons.email,
-                    Icons.account_balance,
-                    color: Colors.grey[400],
-                  ),
-                  SizedBox(width: 260.0),
-                  Text(
-                      "Dinning",
-                      style: TextStyle(
-                        color: Colors.grey,
-                        letterSpacing: 2.0,
-                        fontSize: 15.0,
-                      )
-                  ),
-                ]
-            ),
-            Row(
-                children: <Widget>[
-                  SizedBox(width: 300.0),
-
-                  Text(
-                      "\$80",
-                      style: TextStyle(
-                          color: Colors.greenAccent,
-                          letterSpacing: 2.0,
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.bold
-                      )
-                  ),
-                ]
-            ),
-
-            SizedBox(height: 10.0), //Sized Box
-            Row(
-                children: <Widget>[
-                  Icon(
-                    //Icons.email,
-                    Icons.account_balance,
-                    color: Colors.grey[400],
-                  ),
-                  SizedBox(width: 290.0),
-                  Text(
-                      "Fun",
-                      style: TextStyle(
-                        color: Colors.grey,
-                        letterSpacing: 2.0,
-                        fontSize: 15.0,
-                      )
-                  ),
-                ]
-            ),
-            Row(
-                children: <Widget>[
-                  SizedBox(width: 300.0),
-
-                  Text(
-                      "\$40",
-                      style: TextStyle(
-                          color: Colors.greenAccent,
-                          letterSpacing: 2.0,
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.bold
-                      )
-                  ),
-                ]
-            ),
-            SizedBox(height: 10.0), //Sized Box
-            Row(
-                children: <Widget>[
-                  Icon(
-                    //Icons.email,
-                    Icons.account_balance,
-                    color: Colors.grey[400],
-                  ),
-                  SizedBox(width: 270.0),
-                  Text(
-                      "Sports",
-                      style: TextStyle(
-                        color: Colors.grey,
-                        letterSpacing: 2.0,
-                        fontSize: 15.0,
-                      )
-                  ),
-                ]
-            ),
-            Row(
-                children: <Widget>[
-                  SizedBox(width: 300.0),
-
-                  Text(
-                      "\$69",
-                      style: TextStyle(
-                          color: Colors.greenAccent,
-                          letterSpacing: 2.0,
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.bold
-                      )
-                  ),
-                ]
-            ),
-
-            SizedBox(height: 10.0), //Sized Box
-            Row(
-                children: <Widget>[
-                  Icon(
-                    //Icons.email,
-                    Icons.account_balance,
-                    color: Colors.grey[400],
-                  ),
-                  SizedBox(width: 270.0),
-                  Text(
-                      "Phone",
-                      style: TextStyle(
-                        color: Colors.grey,
-                        letterSpacing: 2.0,
-                        fontSize: 15.0,
-                      )
-                  ),
-                ]
-            ),
-            Row(
-                children: <Widget>[
-                  SizedBox(width: 300.0),
-
-                  Text(
-                      "\$21",
-                      style: TextStyle(
-                          color: Colors.greenAccent,
-                          letterSpacing: 2.0,
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.bold
-                      )
-                  ),
-                ]
-            ),
-            SizedBox(height: 10.0), //Sized Box
-            Row(
-                children: <Widget>[
-                  Icon(
-                    //Icons.email,
-                    Icons.account_balance,
-                    color: Colors.grey[400],
-                  ),
-                  SizedBox(width: 290.0),
-                  Text(
-                      "Car",
-                      style: TextStyle(
-                        color: Colors.grey,
-                        letterSpacing: 2.0,
-                        fontSize: 15.0,
-                      )
-                  ),
-                ]
-            ),
-            Row(
-                children: <Widget>[
-                  SizedBox(width: 300.0),
-
-                  Text(
-                      "\$11",
-                      style: TextStyle(
-                          color: Colors.greenAccent,
-                          letterSpacing: 2.0,
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.bold
-                      )
-                  ),
-                ]
-            ),
 
 
           ],
@@ -289,39 +176,16 @@ class Home extends StatelessWidget {
         ),
       ),
 
-//      body: Center(
-//        child: Image.asset('Assets/background.jpg'),
-//        ),
-
-    //),
-//        child: Text(
-//          'Take control of your finances!',
-//          style: TextStyle(
-//            fontSize: 20.0,
-//            fontWeight: FontWeight.bold,
-//            letterSpacing: 2.0,
-//            color: Colors.green,
-//            fontFamily: 'Customfont',
-//          ),
-        //),
-
-     // ),
-
-//
-//      bottomNavigationBar: BottomAppBar(
-//        shape: const CircularNotchedRectangle(),
-//        child: Container(
-//          height: 50.0,
-//          color: Colors.grey,
-//        ),
-//      ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.greenAccent,
         child: const Icon(
           Icons.edit,
           color: Colors.blueGrey,
         ),
-        onPressed: () {},
+        onPressed: () {
+          
+          Navigator.pushNamed(context, '/budgeter', arguments: {"budgets": this.budgets});
+        },
       ),
 
       bottomNavigationBar: BottomAppBar(
@@ -344,6 +208,112 @@ class Home extends StatelessWidget {
         ),
         color: Colors.grey,
       ),
+    );
+  }
+}
+
+class BudgetsWidgets extends StatefulWidget {
+
+  final Budgets bdg;
+  final Function delete;
+
+  BudgetsWidgets({this.bdg, this.delete});
+
+  @override
+  _BudgetsWidgetsState createState() => _BudgetsWidgetsState();
+}
+
+class _BudgetsWidgetsState extends State<BudgetsWidgets> {
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+
+        children: <Widget>[
+          Expanded(
+              flex: 2,
+              child:
+              Column (
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Icon(Icons.account_balance,
+                      color: Colors.grey[400],
+                    )
+                  ]
+              )
+          ),
+
+          Expanded(
+              flex: 10,
+              child:
+              Column (
+                  crossAxisAlignment: CrossAxisAlignment.start,
+
+
+                  children: <Widget>[
+
+                    Text(
+                        widget.bdg.text,
+                        style: TextStyle(
+                          color: Colors.grey,
+                          letterSpacing: 2.0,
+                          fontSize: 12.5,
+                        )
+                    ),
+
+                  ]
+              )
+          ),
+          Expanded(
+              flex: 7,
+              child:
+              Column (
+
+                  children: <Widget>[
+
+                    Text(
+                        "",
+                        style: TextStyle(
+                          color: Colors.grey,
+                          letterSpacing: 2.0,
+                          fontSize: 12.5,
+                        )
+                    ),
+
+                  ]
+              )
+          ),
+          Expanded (
+            flex: 11,
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+
+                  Text(
+                      widget.bdg.value,
+                      style: TextStyle(
+                          color: Colors.greenAccent,
+                          letterSpacing: 2.0,
+                          fontSize: 15.0,
+                          fontWeight: FontWeight.bold
+                      )
+                  ),
+                  FlatButton.icon(
+                      onPressed: widget.delete,
+                      icon: Icon(Icons.money_off, color:Colors.red, size: 20.0),
+                      //color: Colors.greenAccent,
+                      label: Text('')
+                  )
+
+                ]
+            ),
+          ),
+
+
+
+
+        ]
+
+
     );
   }
 }
