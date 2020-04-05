@@ -27,10 +27,10 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
 
+  Cash cashInHand = new Cash(cashValue: "0");
 
 
-
-      List<Budgets> budgets= [
+  List<Budgets> budgets = [
         Budgets(text:'Shopping',value:'500'),
         Budgets(text:'Car',value:'200'),
         Budgets(text:'Dog',value:'300'),
@@ -41,8 +41,12 @@ class _HomeState extends State<Home> {
 
 
 
+
   @override
   Widget build(BuildContext context) {
+    String currentCash = this.cashInHand.cashValue;
+
+
     return Scaffold(
 
 
@@ -56,11 +60,9 @@ class _HomeState extends State<Home> {
       ),
 
 
-
-
       body: Padding(
 
-         padding: const EdgeInsets.fromLTRB(30.0, 40.0, 30.0, 0.0),
+        padding: const EdgeInsets.fromLTRB(30.0, 40.0, 30.0, 0.0),
 
         child: Column(
 
@@ -68,22 +70,22 @@ class _HomeState extends State<Home> {
           children: <Widget>[
 
             Text(
-              'NAME',
-              style: TextStyle(
-                color: Colors.grey,
-                letterSpacing: 2.0,
-                //fontSize: 20.0,
-              )
+                'NAME',
+                style: TextStyle(
+                  color: Colors.grey,
+                  letterSpacing: 2.0,
+                  //fontSize: 20.0,
+                )
             ),
 
             SizedBox(height: 10.0),
             Text(
                 'Omar Moharrem',
                 style: TextStyle(
-                  color: Colors.greenAccent,
-                  letterSpacing: 2.0,
-                  fontSize: 30.0,
-                  fontWeight: FontWeight.bold
+                    color: Colors.greenAccent,
+                    letterSpacing: 2.0,
+                    fontSize: 30.0,
+                    fontWeight: FontWeight.bold
                 )
             ),
 
@@ -99,7 +101,7 @@ class _HomeState extends State<Home> {
             SizedBox(height: 10.0),
 
             Text(
-                "\$521",
+                "\$$currentCash",
                 style: TextStyle(
                     color: Colors.greenAccent,
                     letterSpacing: 2.0,
@@ -121,10 +123,7 @@ class _HomeState extends State<Home> {
                   bdg: budgets,
                   delete: (){
                     setState(() {
-
-                    this.budgets.remove(budgets);
-
-
+                      this.budgets.remove(budgets);
                     });
                   }
 
@@ -134,12 +133,6 @@ class _HomeState extends State<Home> {
 
 
             //############Function end#################
-
-
-
-
-
-
 
 
             //############SECOND ENTRY#################
@@ -170,7 +163,6 @@ class _HomeState extends State<Home> {
             //SizedBox(height: 10.0), //Sized Box
 
 
-
           ],
 
         ),
@@ -183,8 +175,8 @@ class _HomeState extends State<Home> {
           color: Colors.blueGrey,
         ),
         onPressed: () {
-          
-          Navigator.pushNamed(context, '/budgeter', arguments: {"budgets": this.budgets});
+          Navigator.pushNamed(context, '/budgeter',
+              arguments: {"budgets": this.budgets, "cash": this.cashInHand});
         },
       ),
 
@@ -243,7 +235,7 @@ class _BudgetsWidgetsState extends State<BudgetsWidgets> {
           ),
 
           Expanded(
-              flex: 10,
+              flex: 6,
               child:
               Column (
                   crossAxisAlignment: CrossAxisAlignment.start,

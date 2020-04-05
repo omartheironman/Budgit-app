@@ -17,6 +17,7 @@ class NewBudget extends State<AddNewBudget> {
   void _value1Changed(bool value) => setState(() => _value1 = value);
 
   List<Budgets> budgets;
+  Cash cash;
 
 
 
@@ -66,11 +67,15 @@ class NewBudget extends State<AddNewBudget> {
     );
   }
 
+
   @override
   Widget build(BuildContext context) {
 
     Map mapdata =ModalRoute.of(context).settings.arguments;
     budgets= mapdata['budgets'];
+
+
+    cash = mapdata['cash'];
     final _formKey = GlobalKey<FormState>();
     final _cash = GlobalKey<FormState>();
 
@@ -83,19 +88,6 @@ class NewBudget extends State<AddNewBudget> {
 
 
 
-    // set up the button
-    Widget okButton = FlatButton(
-      child: Text("OK"),
-      onPressed: () { },
-    );
-    // set up the AlertDialog
-    AlertDialog alert = AlertDialog(
-      title: Text("My title"),
-      content: Text("This is my message."),
-      actions: [
-        okButton,
-      ],
-    );
     // show the dialog
 
 
@@ -112,213 +104,247 @@ class NewBudget extends State<AddNewBudget> {
       ),
 
 
+      body: SingleChildScrollView(
+        child: Padding(
+
+          padding: const EdgeInsets.fromLTRB(30.0, 40.0, 30.0, 0.0),
+
+          child: Column(
 
 
-      body: Padding(
-
-        padding: const EdgeInsets.fromLTRB(30.0, 40.0, 30.0, 0.0),
-
-        child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
 
 
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-
-
-                Form(
-                  key: _formKey,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
+              Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   //  crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
+                  children: <Widget>[
 
-                      TextFormField(
-                        style: TextStyle(
-                          color: Colors.white70,
+                    TextFormField(
+                      style: TextStyle(
+                        color: Colors.white70,
+                      ),
+                      controller: BudgetName,
+
+                      decoration: const InputDecoration(
+
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.greenAccent),
                         ),
-                        controller: BudgetName,
-
-                  decoration: const InputDecoration(
-
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.greenAccent),
-                    ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.greenAccent),
-                    ),
-                    fillColor: Colors.green,
-                          icon: Icon(Icons.text_fields, color:Colors.green),
-                          hintText: 'Enter Budget Name',
-                          hintStyle:  TextStyle(letterSpacing: 2.0,fontSize: 10.0, color: Colors.greenAccent),
-                          labelText: 'Add Budget Name',
-                           labelStyle: TextStyle(letterSpacing: 2.0,fontSize: 10.0, color: Colors.green),
-
-                  ),
-                        validator: (value) {
-                          if (value.isEmpty) {
-                            return 'Please enter some text';
-                          }
-                          return null;
-                        },
-                      ),
-
-                      TextFormField(
-
-                        keyboardType: TextInputType.number,
-
-                        style: TextStyle(
-                          color: Colors.white70,
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.greenAccent),
                         ),
-                        controller: BudgetValue,
-                           decoration: const InputDecoration(
-                            enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.greenAccent),
-                          ),
-                          focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.greenAccent),
-                          ),
-                          fillColor: Colors.green,
-
-                          icon: Icon(Icons.attach_money,color: Colors.green,),
-                          hintText: 'Enter Budget Value',
-                             hintStyle:  TextStyle(letterSpacing: 2.0,fontSize: 10.0, color: Colors.greenAccent),
-
-                             labelText: 'Budget Value',
-                          labelStyle: TextStyle(fontSize: 10.0, color: Colors.green),
-
-                        ),
-
-                        validator: (value) {
-                          if (value.isEmpty) {
-                            return 'Please enter some text';
-                          }
-                          return null;
-                        },
-                      ),
-
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 16.0),
-
-                        child: RaisedButton(
-                          splashColor: Colors.greenAccent,
-
-                          onPressed: () {
-                            // Validate returns true if the form is valid, or false
-                            // otherwise.
-                            if (_formKey.currentState.validate()) {
-                              // If the form is valid, display a Snackbar.
-                                print(BudgetName.text);
-                               this.budgets.add(Budgets(text:BudgetName.text,value:BudgetValue.text));
-                               //pass the context back budgets
-                                Navigator.pop(context, '/budgeter');
-                               // Navigator.popAndPushNamed(context, routeName)
-                            }
-                          },
-                          child: Text('Submit'),
-                        ),
+                        fillColor: Colors.green,
+                        icon: Icon(Icons.text_fields, color: Colors.green),
+                        hintText: 'Enter Budget Name',
+                        hintStyle: TextStyle(letterSpacing: 2.0,
+                            fontSize: 10.0,
+                            color: Colors.greenAccent),
+                        labelText: 'Add Budget Name',
+                        labelStyle: TextStyle(letterSpacing: 2.0,
+                            fontSize: 10.0,
+                            color: Colors.green),
 
                       ),
-
-                    ],
-                  ),
-                )
-              //children:  budgets.map((bdgts)=> budgetToCard(bdgts)).toList(),
-        ,
-
-            SizedBox(height: 10.0),
-
-
-
-            Checkbox(value: _value1,
-                onChanged: (bool newValue) {
-                  setState(() {
-
-                    _value1 = newValue;
-
-
-                    //print(_cash.currentContext.describeWidget('Form').);
-
-                  });
-                }
-            ),
-
-
-
-
-
-
-            _value1==true ? Form(
-
-              key: _cash,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                //  crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-
-
-                  TextFormField(
-
-                    keyboardType: TextInputType.number,
-
-                    style: TextStyle(
-                      color: Colors.white70,
-                    ),
-                    controller: BudgetCash,
-                    decoration: const InputDecoration(
-                      enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.greenAccent),
-                      ),
-                      focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.greenAccent),
-                      ),
-                      fillColor: Colors.green,
-
-                      icon: Icon(Icons.attach_money,color: Colors.green,),
-                      hintText: 'Adjust Cash',
-                      hintStyle:  TextStyle(letterSpacing: 2.0,fontSize: 10.0, color: Colors.greenAccent),
-
-                      labelText: 'Cash in hand',
-                      labelStyle: TextStyle(fontSize: 10.0, color: Colors.green),
-
-                    ),
-
-//                    validator: (value) {
-//                      if (value.isEmpty) {
-//                        return 'Please enter some text';
-//                      }
-//                      return null;
-//                    },
-                  ),
-
-
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16.0),
-
-                    child: RaisedButton(
-                      splashColor: Colors.greenAccent,
-
-                      onPressed: () {
-                        // Validate returns true if the form is valid, or false
-                        // otherwise.
-                        if (_cash.currentState.validate()) {
-                          // If the form is valid, display a Snackbar.
-                          print(BudgetName.text);
-                          this.budgets.add(Budgets(text:BudgetName.text,value:BudgetValue.text));
-                          //pass the context back budgets
-                          Navigator.pop(context, '/budgeter');
-                          // Navigator.popAndPushNamed(context, routeName)
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'Please enter some text';
                         }
+                        return null;
                       },
-
-
-                      child: Text('Adjust Budget'),
                     ),
 
-                  ),
+                    TextFormField(
 
-                ],
+                      keyboardType: TextInputType.number,
+
+                      style: TextStyle(
+                        color: Colors.white70,
+                      ),
+                      controller: BudgetValue,
+                      decoration: const InputDecoration(
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.greenAccent),
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.greenAccent),
+                        ),
+                        fillColor: Colors.green,
+
+                        icon: Icon(Icons.attach_money, color: Colors.green,),
+                        hintText: 'Enter Budget Value',
+                        hintStyle: TextStyle(letterSpacing: 2.0,
+                            fontSize: 10.0,
+                            color: Colors.greenAccent),
+
+                        labelText: 'Budget Value',
+                        labelStyle: TextStyle(
+                            fontSize: 10.0, color: Colors.green),
+
+                      ),
+
+                      validator: (value) {
+                        var cashInHand = double.parse(cash.cashValue);
+                        var newBudgetValue = double.parse('$value');
+                        var totalAllocated = Budgets().GetTotalValues(budgets);
+                        if (value.isEmpty) {
+                          return 'Please enter some text';
+                        }
+
+                        if (cashInHand < newBudgetValue) {
+                          return 'Not enough cash left!';
+                        }
+                        cash.cashValue =
+                            (cashInHand - newBudgetValue).toString();
+                        return null;
+                      },
+                    ),
+
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 16.0),
+
+                      child: RaisedButton(
+                        splashColor: Colors.greenAccent,
+
+                        onPressed: () {
+                          // Validate returns true if the form is valid, or false
+                          // otherwise.
+                          if (_formKey.currentState.validate()) {
+                            // If the form is valid, display a Snackbar.
+                            print(BudgetName.text);
+                            this.budgets.add(Budgets(text: BudgetName.text,
+                                value: BudgetValue.text));
+
+
+                            //pass the context back budgets
+                            Navigator.pop(context, '/budgeter');
+                            // Navigator.popAndPushNamed(context, routeName)
+                          }
+                        },
+                        child: Text('Submit'),
+                      ),
+
+                    ),
+
+                  ],
+                ),
+              )
+              //children:  budgets.map((bdgts)=> budgetToCard(bdgts)).toList(),
+              ,
+
+              SizedBox(height: 10.0),
+
+
+              Checkbox(
+                  value: _value1,
+
+                  activeColor: Colors.greenAccent,
+                  materialTapTargetSize: MaterialTapTargetSize.padded,
+
+                  onChanged: (bool newValue) {
+                    setState(() {
+                      _value1 = newValue;
+
+
+                      //print(_cash.currentContext.describeWidget('Form').);
+
+                    });
+                  }
               ),
-            ) : Container()
+
+
+              _value1 == true ? Form(
+
+                key: _cash,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  //  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+
+
+                    TextFormField(
+
+                      keyboardType: TextInputType.number,
+
+                      style: TextStyle(
+                        color: Colors.white70,
+                      ),
+                      controller: BudgetCash,
+                      decoration: const InputDecoration(
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.greenAccent),
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.greenAccent),
+                        ),
+                        fillColor: Colors.green,
+
+                        icon: Icon(Icons.attach_money, color: Colors.green,),
+                        hintText: 'Adjust Cash',
+                        hintStyle: TextStyle(letterSpacing: 2.0,
+                            fontSize: 10.0,
+                            color: Colors.greenAccent),
+
+                        labelText: 'Cash in hand',
+                        labelStyle: TextStyle(
+                            fontSize: 10.0, color: Colors.green),
+
+                      ),
+
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'Please enter some text';
+                        }
+                        return null;
+                      },
+                    ),
+
+
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 16.0),
+
+                      child: RaisedButton(
+                        splashColor: Colors.greenAccent,
+
+                        onPressed: () {
+                          // Validate returns true if the form is valid, or false
+                          // otherwise.
+                          if (_cash.currentState.validate()) {
+                            // If the form is valid, display a Snackbar.
+                            //print(BudgetName.text);
+                            cash.cashValue = BudgetCash.text;
+                            //this.budgets.add(Budgets(text:BudgetName.text,value:BudgetValue.text));
+                            //pass the context back budgets
+                            Navigator.pop(context, '/budgeter');
+                            // Navigator.popAndPushNamed(context, routeName)
+                          }
+
+
+                          if (_formKey.currentState.validate() &&
+                              _cash.currentState.validate()) {
+                            // If the form is valid, display a Snackbar.
+                            this.budgets.add(Budgets(text: BudgetName.text,
+                                value: BudgetValue.text));
+                            //pass the context back budgets
+                            //this.cash.cashValue =  BudgetCash.text;
+                            Navigator.pop(context, '/budgeter');
+                            //Navigator.pushNamed(context, '/', arguments: {"cash": BudgetCash.text});
+                            // Navigator.popAndPushNamed(context, routeName)
+                          }
+                        },
+
+
+                        child: Text('Adjust Budget'),
+                      ),
+
+                    ),
+
+                  ],
+                ),
+              ) : Container()
 
 
 
@@ -345,19 +371,13 @@ class NewBudget extends State<AddNewBudget> {
 //            )
 
 
-            //############Function end#################
+              //############Function end#################
 
 
+              //############SECOND ENTRY#################
 
 
-
-
-
-
-            //############SECOND ENTRY#################
-
-
-            //SizedBox(height: 10.0), //Sized Box
+              //SizedBox(height: 10.0), //Sized Box
 
 //            Column (
 //                mainAxisAlignment: MainAxisAlignment.end,
@@ -379,12 +399,12 @@ class NewBudget extends State<AddNewBudget> {
 //
 //                ]
 //            ),
-            //SizedBox(height: 10.0), //Sized Box
+              //SizedBox(height: 10.0), //Sized Box
 
 
+            ],
 
-          ],
-
+          ),
         ),
       ),
 

@@ -14,6 +14,7 @@ class _BudgeterState extends State<Budgeter> {
 
 
   List<Budgets> budgets;
+  Cash cash;
 
   TextEditingController _textFieldController = TextEditingController();
 
@@ -40,7 +41,8 @@ class _BudgeterState extends State<Budgeter> {
                 child: new Text('Add'),
                 onPressed: () {
                   Navigator.of(context).pop();
-                  Navigator.pushNamed(context, '/AddNew', arguments: {"budgets": this.budgets});
+                  Navigator.pushNamed(context, '/AddNew',
+                      arguments: {"budgets": this.budgets, "cash": this.cash});
 
                 },
               )
@@ -53,10 +55,16 @@ class _BudgeterState extends State<Budgeter> {
   Widget budgetToCard(Budget){
   return Card(
     color: Colors.grey[800],
-    margin: EdgeInsets.fromLTRB(16, 16, 16, 0),
+      margin: EdgeInsets.fromLTRB(16, 16, 16, 0),
+      child: new InkWell(
+          onTap: () {
+            print("tapped");
+          },
+
     child: Padding(
       padding: const EdgeInsets.all(12.0),
       child: Column(
+
         children: <Widget>[
           Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -69,7 +77,7 @@ class _BudgeterState extends State<Budgeter> {
 
                 Budget.text,
                 style: TextStyle(
-                  fontSize: 12.0,
+                  fontSize: 14.0,
                   color: Colors.greenAccent,
                 )
             ),
@@ -93,6 +101,7 @@ class _BudgeterState extends State<Budgeter> {
 
       ),
     )
+      )
   );
   }
 
@@ -101,7 +110,10 @@ class _BudgeterState extends State<Budgeter> {
 
     Map mapdata =ModalRoute.of(context).settings.arguments;
     budgets= mapdata['budgets'];
+    cash = mapdata['cash'];
 
+    print("CASH IN HAND");
+    print(cash.cashValue);
 
     // set up the button
     Widget okButton = FlatButton(
