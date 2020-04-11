@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'budgets.dart';
+import 'package:percent_indicator/percent_indicator.dart';
 
 class Budgeter extends StatefulWidget {
   @override
@@ -11,11 +12,9 @@ class Budgeter extends StatefulWidget {
 class _BudgeterState extends State<Budgeter> {
 
 
-
-
   List<Budgets> budgets;
   Cash cash;
-
+  final toSpend = TextEditingController();
   TextEditingController _textFieldController = TextEditingController();
 
   _displayDialog(BuildContext context) async {
@@ -23,11 +22,9 @@ class _BudgeterState extends State<Budgeter> {
         context: context,
 
         builder: (context) {
-
           return AlertDialog(
 
             title: Text('Would you like to add a new budget?'),
-
 
 
             actions: <Widget>[
@@ -43,7 +40,6 @@ class _BudgeterState extends State<Budgeter> {
                   Navigator.of(context).pop();
                   Navigator.pushNamed(context, '/AddNew',
                       arguments: {"budgets": this.budgets, "cash": this.cash});
-
                 },
               )
             ],
@@ -52,64 +48,90 @@ class _BudgeterState extends State<Budgeter> {
   }
 
 
-  Widget budgetToCard(Budget){
-  return Card(
-    color: Colors.grey[800],
-      margin: EdgeInsets.fromLTRB(16, 16, 16, 0),
-      child: new InkWell(
-          onTap: () {
-            print("tapped");
-          },
+  //Add listener to spend
+  Widget budgetToCard(Budget) {
+    var budget = double.parse(Budget.value);
+    var spent = 0.0;
+    if (Budget.spent == null) {
+      spent = 0.0;
+    } else {
+      spent = double.parse(Budget.spent);
+    }
 
-    child: Padding(
-      padding: const EdgeInsets.all(12.0),
-      child: Column(
+    //var willSpend = double.parse(toSpend.text);
+    return Card(
+        color: Colors.grey[800],
+        margin: EdgeInsets.fromLTRB(16, 16, 16, 0),
+        child: new InkWell(
+            onTap: () {
+              _showDialog(Budget);
+            },
 
-        children: <Widget>[
-          Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Column(
 
-              children: <Widget>[
+                children: <Widget>[
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
 
-          Expanded(
-            flex: 2,
-            child: Text(
+                      children: <Widget>[
 
-                Budget.text,
-                style: TextStyle(
-                  fontSize: 14.0,
-                  color: Colors.greenAccent,
-                )
-            ),
-          ),
-          SizedBox(height:6.0),
+                        Expanded(
+                          flex: 2,
+                          child: Text(
 
-          Expanded(
-            flex: 0,
-            child: Text(
+                              Budget.text,
+                              style: TextStyle(
+                                fontSize: 14.0,
+                                color: Colors.greenAccent,
+                              )
+                          ),
+                        ),
+                        SizedBox(height: 6.0),
 
-                '\$'+Budget.value,
-                style: TextStyle(
-                  fontSize: 12.0,
-                  color: Colors.greenAccent,
-                )
-            ),
-          ),
-            ]
-          )
-        ],
+                        Expanded(
+                          flex: 0,
+                          child: Text(
 
-      ),
-    )
-      )
-  );
+                              '\$' + Budget.value,
+                              style: TextStyle(
+                                fontSize: 12.0,
+                                color: Colors.greenAccent,
+                              )
+                          ),
+                        ),
+                      ]
+                  ),
+                  SizedBox(height: 6.0),
+                  LinearPercentIndicator(
+                    progressColor: Colors.greenAccent,
+                    percent: spent / budget,
+                    animation: true,
+                    lineHeight: 14.0,
+                    backgroundColor: Colors.grey[850],
+                    center: Text('$spent\$',
+                        style:
+                        new TextStyle(fontWeight: FontWeight.bold,
+                            fontSize: 12.0,
+                            color: Colors.green)),
+
+                  )
+                ],
+
+              ),
+            )
+        )
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-
-    Map mapdata =ModalRoute.of(context).settings.arguments;
-    budgets= mapdata['budgets'];
+    Map mapdata = ModalRoute
+        .of(context)
+        .settings
+        .arguments;
+    budgets = mapdata['budgets'];
     cash = mapdata['cash'];
 
     print("CASH IN HAND");
@@ -118,7 +140,7 @@ class _BudgeterState extends State<Budgeter> {
     // set up the button
     Widget okButton = FlatButton(
       child: Text("OK"),
-      onPressed: () { },
+      onPressed: () {},
     );
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
@@ -144,8 +166,6 @@ class _BudgeterState extends State<Budgeter> {
       ),
 
 
-
-
       body: Padding(
 
         padding: const EdgeInsets.fromLTRB(30.0, 40.0, 30.0, 0.0),
@@ -158,73 +178,10 @@ class _BudgeterState extends State<Budgeter> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
 
-              children:  budgets.map((bdgts)=> budgetToCard(bdgts)).toList(),
+              children: budgets.map((bdgts) => budgetToCard(bdgts)).toList(),
             ),
 
             SizedBox(height: 10.0),
-
-
-
-
-//            Column(
-//
-//
-//              children:
-//
-//
-//              budgets.map((budgets) => BudgetsWidgets(
-//
-//                  bdg: budgets,
-//                  delete: (){
-//                    setState(() {
-//
-//                      this.budgets.remove(budgets);
-//
-//
-//                    });
-//                  }
-//
-//              )).toList(),
-//
-//            )
-
-
-            //############Function end#################
-
-
-
-
-
-
-
-
-            //############SECOND ENTRY#################
-
-
-            //SizedBox(height: 10.0), //Sized Box
-
-//            Column (
-//                mainAxisAlignment: MainAxisAlignment.end,
-//               // crossAxisAlignment: CrossAxisAlignment.end,
-//
-//                children: <Widget>[
-//                 // SizedBox(width: 290.0),
-//
-//                  Text(
-//                      "\$100",
-//                      style: TextStyle(
-//                          color: Colors.greenAccent,
-//                          letterSpacing: 2.0,
-//                          fontSize: 20.0,
-//                          fontWeight: FontWeight.bold
-//                      )
-//                  ),
-//
-//
-//                ]
-//            ),
-            //SizedBox(height: 10.0), //Sized Box
-
 
 
           ],
@@ -240,7 +197,7 @@ class _BudgeterState extends State<Budgeter> {
           //on click have a pop up to add a budget to the list
           color: Colors.blueGrey,
         ),
-          onPressed: () => _displayDialog(context),
+        onPressed: () => _displayDialog(context),
       ),
 
       bottomNavigationBar: BottomAppBar(
@@ -266,6 +223,82 @@ class _BudgeterState extends State<Budgeter> {
 
     );
   }
+
+  _showDialog(Budgets itemsToSpend) async {
+    await showDialog<String>(
+      context: context,
+      child: new AlertDialog(
+        contentPadding: const EdgeInsets.all(16.0),
+        content: new Row(
+          children: <Widget>[
+            new Expanded(
+              child: new TextField(
+                keyboardType: TextInputType.number,
+                autofocus: true,
+                controller: toSpend,
+                decoration: const InputDecoration(
+
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.greenAccent),
+                  ),
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.greenAccent),
+                  ),
+                  fillColor: Colors.green,
+                  icon: Icon(Icons.text_fields, color: Colors.green),
+                  hintText: 'How much you will spend',
+                  hintStyle: TextStyle(letterSpacing: 2.0,
+                      fontSize: 10.0,
+                      color: Colors.greenAccent),
+                  labelText: 'Cost of purchased Item',
+                  labelStyle: TextStyle(letterSpacing: 2.0,
+                      fontSize: 10.0,
+                      color: Colors.green),
+
+                ),
+              ),
+            )
+          ],
+        ),
+        actions: <Widget>[
+          new FlatButton(
+              child: const Text('Cancel'),
+              onPressed: () {
+                Navigator.pop(context);
+                Navigator.popAndPushNamed(context, '/budgeter',
+                    arguments: {"budgets": this.budgets, "cash": this.cash});
+              }),
+          new FlatButton(
+              child: const Text('Spend'),
+              onPressed: () {
+                var budget = double.parse(itemsToSpend.value);
+                var spentMoney;
+                if (itemsToSpend.spent == null) {
+                  itemsToSpend.spent = "0.0";
+                }
+                spentMoney = double.parse(itemsToSpend.spent);
+                var willSpend = double.parse(toSpend.text);
+                if (willSpend == null) {
+                  willSpend = 0.0;
+                }
+                if (budget < willSpend + spentMoney) {
+                  print("Not enough allowance left!");
+                  return null;
+                }
+
+                //set the spent value of the item
+                var totalSpent = spentMoney + willSpend;
+                itemsToSpend.spent = totalSpent.toString();
+
+                Navigator.pop(context);
+                Navigator.popAndPushNamed(context, '/budgeter',
+                    arguments: {"budgets": this.budgets, "cash": this.cash});
+              })
+        ],
+      ),
+    );
+  }
 }
+
 
 

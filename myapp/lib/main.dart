@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'Pages/budgets.dart';
 import 'Pages/AddBudget.dart';
 import 'Pages/NewBudget.dart';
+import 'package:percent_indicator/percent_indicator.dart';
 
 void main() => runApp(MaterialApp(
   //open up Material widget
@@ -113,23 +114,41 @@ class _HomeState extends State<Home> {
             SizedBox(height: 40.0),
 
             Column(
+              // mainAxisAlignment: MainAxisAlignment.center,
+
+                children: <Widget>[
+
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(80, 20, 20, 60),
+
+                    child: new CircularPercentIndicator(
+                      radius: 200.0,
+                      lineWidth: 10.0,
+                      percent: 0.8,
+                      center: new Icon(
+                        Icons.account_balance,
+                        size: 100.0,
+                        color: Colors.greenAccent,
+                      ),
+                      backgroundColor: Colors.grey[850],
+                      progressColor: Colors.greenAccent,
+                    ),
+                  ),
+                  //children:
 
 
-              children:
+//              budgets.map((budgets) => BudgetsWidgets(
+//
+//                  bdg: budgets,
+//                  delete: (){
+//                    setState(() {
+//                      this.budgets.remove(budgets);
+//                    });
+//                  }
+//
+//              )).toList(),
 
-
-              budgets.map((budgets) => BudgetsWidgets(
-
-                  bdg: budgets,
-                  delete: (){
-                    setState(() {
-                      this.budgets.remove(budgets);
-                    });
-                  }
-
-              )).toList(),
-
-            )
+                ])
 
 
             //############Function end#################
