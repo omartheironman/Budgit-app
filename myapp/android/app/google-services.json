@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1034838903414",
+    "firebase_url": "https://mywallet-d9cb6.firebaseio.com",
+    "project_id": "mywallet-d9cb6",
+    "storage_bucket": "mywallet-d9cb6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1034838903414:android:f78671ae8776ea1de8ed57",
+        "android_client_info": {
+          "package_name": "omarmoharrem.myapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1034838903414-qp3uj72hpgus9nsj0v924pfnikq2394m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "omarmoharrem.myapp",
+            "certificate_hash": "ddbe230cc7b36c9f67eab8ba543d94b0096a0549"
+          }
+        },
+        {
+          "client_id": "1034838903414-9db661em5ufj722mimil29hhsft1p516.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCffcOc2w9aqoLwgoXS_HXEuEHn7MbYBro"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1034838903414-9db661em5ufj722mimil29hhsft1p516.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

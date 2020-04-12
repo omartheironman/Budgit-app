@@ -1,6 +1,8 @@
 
 import 'package:flutter/material.dart';
 import 'budgets.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:myapp/db/DBController.dart';
 
 class AddNewBudget extends StatefulWidget {
   @override
@@ -12,7 +14,7 @@ class AddNewBudget extends StatefulWidget {
 class NewBudget extends State<AddNewBudget> {
 
 
-
+  final Dbcontroller controller = new Dbcontroller();
   bool _value1 = false;
   void _value1Changed(bool value) => setState(() => _value1 = value);
 
@@ -199,6 +201,8 @@ class NewBudget extends State<AddNewBudget> {
                         }
                         cash.cashValue =
                             (cashInHand - newBudgetValue).toString();
+
+
                         return null;
                       },
                     ),
@@ -209,7 +213,7 @@ class NewBudget extends State<AddNewBudget> {
                       child: RaisedButton(
                         splashColor: Colors.greenAccent,
 
-                        onPressed: () {
+                        onPressed: () async {
                           // Validate returns true if the form is valid, or false
                           // otherwise.
                           if (_formKey.currentState.validate()) {
@@ -217,6 +221,26 @@ class NewBudget extends State<AddNewBudget> {
                             print(BudgetName.text);
                             this.budgets.add(Budgets(text: BudgetName.text,
                                 value: BudgetValue.text));
+
+                            //Write to the DB
+                            //add to db
+                            // await  Firestore.instance.collection('users').document("OmarMoharrem").setData({'Allocation':cash.cashValue});
+//                            await  Firestore.instance.collection('users').document("OmarMoharrem").collection('Budgets').add({
+//                              'budgetName':BudgetName.text,
+//                              'budgetValue':BudgetValue.text
+//                            });
+
+
+                            controller.AddBudget({
+                              'budgetName': BudgetName.text,
+                              'budgetValue': BudgetValue.text,
+                              'spent': '0.0'
+                            }, 'omarmoharrem');
+                            controller.UpdateAllocation(
+                                {'Allocations': cash.cashValue},
+                                'omarmoharrem');
+
+
 
 
                             //pass the context back budgets

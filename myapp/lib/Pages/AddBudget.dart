@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'budgets.dart';
 import 'package:percent_indicator/percent_indicator.dart';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:myapp/db/DBController.dart';
 class Budgeter extends StatefulWidget {
   @override
   _BudgeterState createState() => _BudgeterState();
@@ -11,6 +12,7 @@ class Budgeter extends StatefulWidget {
 
 class _BudgeterState extends State<Budgeter> {
 
+  final Dbcontroller controller = new Dbcontroller();
 
   List<Budgets> budgets;
   Cash cash;
@@ -136,7 +138,7 @@ class _BudgeterState extends State<Budgeter> {
 
     print("CASH IN HAND");
     print(cash.cashValue);
-
+    //controller.UpdateAllocation({'Allocations':cash.cashValue},'omarmoharrem');
     // set up the button
     Widget okButton = FlatButton(
       child: Text("OK"),
@@ -175,6 +177,7 @@ class _BudgeterState extends State<Budgeter> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
 
+
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
 
@@ -182,7 +185,6 @@ class _BudgeterState extends State<Budgeter> {
             ),
 
             SizedBox(height: 10.0),
-
 
           ],
 
@@ -293,6 +295,8 @@ class _BudgeterState extends State<Budgeter> {
                 Navigator.pop(context);
                 Navigator.popAndPushNamed(context, '/budgeter',
                     arguments: {"budgets": this.budgets, "cash": this.cash});
+                controller.UpdateBudget(
+                    itemsToSpend.text, itemsToSpend.spent, 'omarmoharrem');
               })
         ],
       ),

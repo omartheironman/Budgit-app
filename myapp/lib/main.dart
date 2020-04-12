@@ -30,11 +30,11 @@ class _HomeState extends State<Home> {
 
   Cash cashInHand = new Cash(cashValue: "0");
 
-
+  //Fetch all the budgets from the database ...
   List<Budgets> budgets = [
-        Budgets(text:'Shopping',value:'500'),
-        Budgets(text:'Car',value:'200'),
-        Budgets(text:'Dog',value:'300'),
+//        Budgets(text:'Shopping',value:'500'),
+//        Budgets(text:'Car',value:'200'),
+//        Budgets(text:'Dog',value:'300'),
 
       ];
 
