@@ -54,6 +54,7 @@ class loginpagestate extends State<SignIn> with SingleTickerProviderStateMixin {
                     //fit: BoxFit.scaleDown,
                     alignment: Alignment.center,
                   )
+
 //                child: new FlutterLogo(
 //                  size: _iconAnimation.value * 100,
 //
@@ -124,10 +125,20 @@ class loginpagestate extends State<SignIn> with SingleTickerProviderStateMixin {
                                 //var results = await controller.GetBudgets("omarmoharrem");
                                 await controller.GetBudgets("omarmoharrem")
                                     .then((result) {
-                                  print(result);
-                                  setState(() {
+                                  // print(result["Budgets"]);
+                                  List<Budgets> budgets = result["Budgets"];
+                                  Cash cashInHand = result["Allocation"];
+                                  print(cashInHand.cashValue);
+
+                                  Navigator.pushNamed(context, '/home',
+                                      arguments: {
+                                        "budgets": budgets,
+                                        "cash": cashInHand.cashValue
+                                      });
+
+                                  //setState(() {
                                     // print(result);
-                                  });
+                                  //});
                                 });
 
                                 //Cash cashInHand = new Cash(cashValue: "0");

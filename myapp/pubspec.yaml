@@ -33,6 +33,13 @@ dev_dependencies:
     sdk: flutter
   percent_indicator: "^2.1.1"
 
+  flutter_launcher_icons: ^0.7.4
+
+flutter_icons:
+  image_path: "Assets/logo.png"
+  ios: true
+  android: true
+
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -64,6 +71,9 @@ flutter:
      - family: Customfont
        fonts:
          - asset: fonts/GochiHand-Regular.ttf
+     - family: Sairafont
+       fonts:
+         - asset: fonts/Saira-Medium.ttf
 
 
   #

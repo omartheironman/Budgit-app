@@ -89,6 +89,7 @@ class _BudgeterState extends State<Budgeter> {
                               Budget.text,
                               style: TextStyle(
                                 fontSize: 14.0,
+                                fontFamily: 'Sairafont',
                                 color: Color.fromRGBO(243, 53, 53, 1.0),
                               )
                           ),
@@ -102,6 +103,7 @@ class _BudgeterState extends State<Budgeter> {
                               '\$' + Budget.value,
                               style: TextStyle(
                                 fontSize: 12.0,
+                                fontFamily: 'Sairafont',
                                 color: Color.fromRGBO(243, 53, 53, 1.0),
                               )
                           ),
@@ -165,7 +167,9 @@ class _BudgeterState extends State<Budgeter> {
 
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       appBar: AppBar(
-        title: Text("Budgit"),
+        title: Text("Budgit", style: TextStyle(
+          //color: Colors.white,
+          fontFamily: 'Sairafont',)),
         backgroundColor: Color.fromRGBO(243, 53, 53, 1.0),
         centerTitle: true,
         elevation: 0.0,
@@ -255,7 +259,7 @@ class _BudgeterState extends State<Budgeter> {
                   hintText: 'How much you will spend',
                   hintStyle: TextStyle(letterSpacing: 2.0,
                       fontSize: 10.0,
-                      color: Colors.white),
+                      color: Colors.white, fontFamily: 'Sairafont'),
                   labelText: 'Cost of purchased Item',
                   labelStyle: TextStyle(letterSpacing: 2.0,
                       fontSize: 10.0,

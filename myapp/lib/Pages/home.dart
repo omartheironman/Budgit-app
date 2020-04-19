@@ -10,6 +10,8 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+
+
   Cash cashInHand = new Cash(cashValue: "0");
 
   //Fetch all the budgets from the database ...
@@ -19,15 +21,29 @@ class _HomeState extends State<Home> {
 //        Budgets(text:'Dog',value:'300'),
   ];
 
+
+  //Cash  cashInHand = mapdata['cash'];
+
   @override
   Widget build(BuildContext context) {
-    String currentCash = this.cashInHand.cashValue;
+    Map mapdata = ModalRoute
+        .of(context)
+        .settings
+        .arguments;
 
+    String currentCash = mapdata['cash'];
+    budgets = mapdata['budgets'];
     return Scaffold(
       backgroundColor: Color.fromRGBO(243, 53, 53, 1.0),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       appBar: AppBar(
-        title: Text("Budgit"),
+        title: Text("Budgit",
+            style: TextStyle(
+              //color: Colors.white,
+              fontFamily: 'Sairafont',)
+        ),
+
+
         backgroundColor: Color.fromRGBO(243, 53, 53, 1.0),
         centerTitle: true,
         elevation: 0.0,
@@ -41,6 +57,7 @@ class _HomeState extends State<Home> {
                 style: TextStyle(
                   color: Colors.white70,
                   letterSpacing: 2.0,
+                  fontFamily: 'Sairafont',
                   //fontSize: 20.0,
                 )),
 
@@ -48,15 +65,19 @@ class _HomeState extends State<Home> {
             Text('Omar Moharrem',
                 style: TextStyle(
                     color: Colors.white,
+                    fontFamily: 'Sairafont',
                     letterSpacing: 2.0,
+                    //letterSpacing: 2.0,
                     fontSize: 30.0,
-                    fontWeight: FontWeight.bold)),
+                    fontWeight: FontWeight.bold)
+            ),
 
             SizedBox(height: 10.0),
             Text('Left to Spend',
                 style: TextStyle(
                   color: Colors.white70,
                   letterSpacing: 2.0,
+                  fontFamily: 'Sairafont',
                   //fontSize: 20.0,
                 )),
             SizedBox(height: 10.0),
@@ -65,6 +86,7 @@ class _HomeState extends State<Home> {
                 style: TextStyle(
                     color: Colors.white,
                     letterSpacing: 2.0,
+                    fontFamily: 'Sairafont',
                     fontSize: 30.0,
                     fontWeight: FontWeight.bold)),
 

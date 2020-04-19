@@ -99,7 +99,9 @@ class NewBudget extends State<AddNewBudget> {
       backgroundColor: Color.fromRGBO(243, 53, 53, 1.0),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       appBar: AppBar(
-        title: Text("Budgit"),
+        title: Text("Budgit", style: TextStyle(
+          //color: Colors.white,
+          fontFamily: 'Sairafont',)),
         backgroundColor: Color.fromRGBO(243, 53, 53, 1.0),
         centerTitle: true,
         elevation: 0.0,
@@ -128,6 +130,7 @@ class NewBudget extends State<AddNewBudget> {
                     TextFormField(
                       style: TextStyle(
                         color: Colors.white70,
+                        fontFamily: 'Sairafont',
                       ),
                       controller: BudgetName,
 
@@ -142,11 +145,13 @@ class NewBudget extends State<AddNewBudget> {
                         fillColor: Colors.white,
                         icon: Icon(Icons.text_fields, color: Colors.white),
                         hintText: 'Enter Budget Name',
-                        hintStyle: TextStyle(letterSpacing: 2.0,
+                        hintStyle: TextStyle(
+                            letterSpacing: 2.0, fontFamily: 'Sairafont',
                             fontSize: 10.0,
                             color: Colors.white),
                         labelText: 'Add Budget Name',
-                        labelStyle: TextStyle(letterSpacing: 2.0,
+                        labelStyle: TextStyle(
+                            letterSpacing: 2.0, fontFamily: 'Sairafont',
                             fontSize: 10.0,
                             color: Colors.white),
 
@@ -165,6 +170,7 @@ class NewBudget extends State<AddNewBudget> {
 
                       style: TextStyle(
                         color: Colors.white70,
+                        fontFamily: 'Sairafont',
                       ),
                       controller: BudgetValue,
                       decoration: const InputDecoration(
@@ -179,11 +185,11 @@ class NewBudget extends State<AddNewBudget> {
                         icon: Icon(Icons.attach_money, color: Colors.white,),
                         hintText: 'Enter Budget Value',
                         hintStyle: TextStyle(letterSpacing: 2.0,
-                            fontSize: 10.0,
+                            fontSize: 10.0, fontFamily: 'Sairafont',
                             color: Colors.white),
 
                         labelText: 'Budget Value',
-                        labelStyle: TextStyle(
+                        labelStyle: TextStyle(fontFamily: 'Sairafont',
                             fontSize: 10.0, color: Colors.white),
 
                       ),
@@ -295,6 +301,7 @@ class NewBudget extends State<AddNewBudget> {
 
                       style: TextStyle(
                         color: Colors.white70,
+                        fontFamily: 'Sairafont',
                       ),
                       controller: BudgetCash,
                       decoration: const InputDecoration(
@@ -314,7 +321,9 @@ class NewBudget extends State<AddNewBudget> {
 
                         labelText: 'Cash in hand',
                         labelStyle: TextStyle(
-                            fontSize: 10.0, color: Colors.white),
+                            fontSize: 10.0,
+                            fontFamily: 'Sairafont',
+                            color: Colors.white),
 
                       ),
 
