@@ -96,11 +96,11 @@ class NewBudget extends State<AddNewBudget> {
     return Scaffold(
 
 
-      backgroundColor: Colors.grey[900],
+      backgroundColor: Color.fromRGBO(243, 53, 53, 1.0),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       appBar: AppBar(
-        title: Text("MyWallet"),
-        backgroundColor: Colors.grey[850],
+        title: Text("Budgit"),
+        backgroundColor: Color.fromRGBO(243, 53, 53, 1.0),
         centerTitle: true,
         elevation: 0.0,
       ),
@@ -139,16 +139,16 @@ class NewBudget extends State<AddNewBudget> {
                         focusedBorder: UnderlineInputBorder(
                           borderSide: BorderSide(color: Colors.greenAccent),
                         ),
-                        fillColor: Colors.green,
-                        icon: Icon(Icons.text_fields, color: Colors.green),
+                        fillColor: Colors.white,
+                        icon: Icon(Icons.text_fields, color: Colors.white),
                         hintText: 'Enter Budget Name',
                         hintStyle: TextStyle(letterSpacing: 2.0,
                             fontSize: 10.0,
-                            color: Colors.greenAccent),
+                            color: Colors.white),
                         labelText: 'Add Budget Name',
                         labelStyle: TextStyle(letterSpacing: 2.0,
                             fontSize: 10.0,
-                            color: Colors.green),
+                            color: Colors.white),
 
                       ),
                       validator: (value) {
@@ -174,17 +174,17 @@ class NewBudget extends State<AddNewBudget> {
                         focusedBorder: UnderlineInputBorder(
                           borderSide: BorderSide(color: Colors.greenAccent),
                         ),
-                        fillColor: Colors.green,
+                        fillColor: Colors.white,
 
-                        icon: Icon(Icons.attach_money, color: Colors.green,),
+                        icon: Icon(Icons.attach_money, color: Colors.white,),
                         hintText: 'Enter Budget Value',
                         hintStyle: TextStyle(letterSpacing: 2.0,
                             fontSize: 10.0,
-                            color: Colors.greenAccent),
+                            color: Colors.white),
 
                         labelText: 'Budget Value',
                         labelStyle: TextStyle(
-                            fontSize: 10.0, color: Colors.green),
+                            fontSize: 10.0, color: Colors.white),
 
                       ),
 
@@ -299,22 +299,22 @@ class NewBudget extends State<AddNewBudget> {
                       controller: BudgetCash,
                       decoration: const InputDecoration(
                         enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.greenAccent),
+                          borderSide: BorderSide(color: Colors.white),
                         ),
                         focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.greenAccent),
+                          borderSide: BorderSide(color: Colors.white),
                         ),
-                        fillColor: Colors.green,
+                        fillColor: Colors.white,
 
-                        icon: Icon(Icons.attach_money, color: Colors.green,),
+                        icon: Icon(Icons.attach_money, color: Colors.white),
                         hintText: 'Adjust Cash',
                         hintStyle: TextStyle(letterSpacing: 2.0,
                             fontSize: 10.0,
-                            color: Colors.greenAccent),
+                            color: Colors.white),
 
                         labelText: 'Cash in hand',
                         labelStyle: TextStyle(
-                            fontSize: 10.0, color: Colors.green),
+                            fontSize: 10.0, color: Colors.white),
 
                       ),
 
@@ -331,7 +331,7 @@ class NewBudget extends State<AddNewBudget> {
                       padding: const EdgeInsets.symmetric(vertical: 16.0),
 
                       child: RaisedButton(
-                        splashColor: Colors.greenAccent,
+                        splashColor: Colors.white,
 
                         onPressed: () {
                           // Validate returns true if the form is valid, or false
@@ -434,7 +434,7 @@ class NewBudget extends State<AddNewBudget> {
 
 
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.greenAccent,
+        backgroundColor: Colors.white,
         child: const Icon(
           Icons.add,
           //on click have a pop up to add a budget to the list

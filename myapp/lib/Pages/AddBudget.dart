@@ -3,6 +3,7 @@ import 'budgets.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:myapp/db/DBController.dart';
+
 class Budgeter extends StatefulWidget {
   @override
   _BudgeterState createState() => _BudgeterState();
@@ -62,7 +63,9 @@ class _BudgeterState extends State<Budgeter> {
 
     //var willSpend = double.parse(toSpend.text);
     return Card(
-        color: Colors.grey[800],
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0)),
+        color: Colors.white,
         margin: EdgeInsets.fromLTRB(16, 16, 16, 0),
         child: new InkWell(
             onTap: () {
@@ -86,7 +89,7 @@ class _BudgeterState extends State<Budgeter> {
                               Budget.text,
                               style: TextStyle(
                                 fontSize: 14.0,
-                                color: Colors.greenAccent,
+                                color: Color.fromRGBO(243, 53, 53, 1.0),
                               )
                           ),
                         ),
@@ -99,7 +102,7 @@ class _BudgeterState extends State<Budgeter> {
                               '\$' + Budget.value,
                               style: TextStyle(
                                 fontSize: 12.0,
-                                color: Colors.greenAccent,
+                                color: Color.fromRGBO(243, 53, 53, 1.0),
                               )
                           ),
                         ),
@@ -107,7 +110,7 @@ class _BudgeterState extends State<Budgeter> {
                   ),
                   SizedBox(height: 6.0),
                   LinearPercentIndicator(
-                    progressColor: Colors.greenAccent,
+                    progressColor: Color.fromRGBO(243, 53, 53, 1.0),
                     percent: spent / budget,
                     animation: true,
                     lineHeight: 14.0,
@@ -116,7 +119,7 @@ class _BudgeterState extends State<Budgeter> {
                         style:
                         new TextStyle(fontWeight: FontWeight.bold,
                             fontSize: 12.0,
-                            color: Colors.green)),
+                            color: Colors.white)),
 
                   )
                 ],
@@ -158,11 +161,12 @@ class _BudgeterState extends State<Budgeter> {
     return Scaffold(
 
 
-      backgroundColor: Colors.grey[900],
+      backgroundColor: Color.fromRGBO(243, 53, 53, 1.0),
+
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       appBar: AppBar(
-        title: Text("MyWallet"),
-        backgroundColor: Colors.grey[850],
+        title: Text("Budgit"),
+        backgroundColor: Color.fromRGBO(243, 53, 53, 1.0),
         centerTitle: true,
         elevation: 0.0,
       ),
@@ -193,7 +197,7 @@ class _BudgeterState extends State<Budgeter> {
 
 
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.greenAccent,
+        backgroundColor: Colors.white,
         child: const Icon(
           Icons.add,
           //on click have a pop up to add a budget to the list
@@ -241,17 +245,17 @@ class _BudgeterState extends State<Budgeter> {
                 decoration: const InputDecoration(
 
                   enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.greenAccent),
+                    borderSide: BorderSide(color: Colors.black),
                   ),
                   focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.greenAccent),
+                    borderSide: BorderSide(color: Colors.black),
                   ),
                   fillColor: Colors.green,
                   icon: Icon(Icons.text_fields, color: Colors.green),
                   hintText: 'How much you will spend',
                   hintStyle: TextStyle(letterSpacing: 2.0,
                       fontSize: 10.0,
-                      color: Colors.greenAccent),
+                      color: Colors.white),
                   labelText: 'Cost of purchased Item',
                   labelStyle: TextStyle(letterSpacing: 2.0,
                       fontSize: 10.0,
@@ -267,8 +271,23 @@ class _BudgeterState extends State<Budgeter> {
               child: const Text('Cancel'),
               onPressed: () {
                 Navigator.pop(context);
-                Navigator.popAndPushNamed(context, '/budgeter',
-                    arguments: {"budgets": this.budgets, "cash": this.cash});
+              }),
+          new FlatButton(
+              child: const Text('Delete'),
+              onPressed: () {
+                setState(() {
+                  this.budgets.remove(itemsToSpend);
+                  //Add the deleted item's budget back to the total cash...
+                  controller.DeleteBudget(itemsToSpend.text, 'omarmoharrem');
+                });
+                cash.cashValue = (double.parse(cash.cashValue) +
+                    double.parse(itemsToSpend.value)).toString();
+                controller.UpdateAllocation(
+                    {'Allocations': cash.cashValue},
+                    'omarmoharrem');
+                Navigator.pop(context);
+//                Navigator.popAndPushNamed(context, '/budgeter',
+//                    arguments: {"budgets": this.budgets, "cash": this.cash});
               }),
           new FlatButton(
               child: const Text('Spend'),
@@ -293,8 +312,13 @@ class _BudgeterState extends State<Budgeter> {
                 itemsToSpend.spent = totalSpent.toString();
 
                 Navigator.pop(context);
-                Navigator.popAndPushNamed(context, '/budgeter',
-                    arguments: {"budgets": this.budgets, "cash": this.cash});
+
+                setState(() {
+                  //this.budgets.add(itemsToSpend);
+
+                });
+//                Navigator.popAndPushNamed(context, '/budgeter',
+//                    arguments: {"budgets": this.budgets, "cash": this.cash});
                 controller.UpdateBudget(
                     itemsToSpend.text, itemsToSpend.spent, 'omarmoharrem');
               })
