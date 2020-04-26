@@ -12,29 +12,32 @@ class Budgets{
   double GetTotalValues(List<Budgets> budgets) {
     var total = 0.0;
 
-    for (var i = 0; i < budgets.length; i++) {
-      total += double.parse(budgets[i].value);
+    if (budgets != null) {
+      for (var i = 0; i < budgets.length; i++) {
+        total += double.parse(budgets[i].value);
+      }
+    } else {
+      return 0.0;
     }
 
-    print("Left to spend");
-    print(total);
     return total;
   }
 
   //Get the sum of all spent
   double GetTotalSpent(List<Budgets> budgets) {
     var total = 0.0;
+    if (budgets == null || budgets.length > 0) {
+      print("budgets is null");
+      return 0.0;
+    }
+
 
     for (var i = 0; i < budgets.length; i++) {
       total += double.parse(budgets[i].spent);
+
+      return total;
     }
-
-    print("Toral spent");
-    print(total);
-    return total;
   }
-
-
 }
 
 

@@ -78,6 +78,8 @@ class NewBudget extends State<AddNewBudget> {
 
 
     cash = mapdata['cash'];
+    print("CASHHH");
+    print(cash.cashValue);
     final _formKey = GlobalKey<FormState>();
     final _cash = GlobalKey<FormState>();
 
@@ -196,7 +198,11 @@ class NewBudget extends State<AddNewBudget> {
 
                       validator: (value) {
                         var cashInHand = double.parse(cash.cashValue);
-                        var newBudgetValue = double.parse('$value');
+                        var newBudgetValue = 0.0;
+                        if (value != null) {
+                          print("@@@@@@@@@@@ " + value);
+                          newBudgetValue = double.parse(value);
+                        }
                         var totalAllocated = Budgets().GetTotalValues(budgets);
                         if (value.isEmpty) {
                           return 'Please enter some text';
@@ -219,22 +225,16 @@ class NewBudget extends State<AddNewBudget> {
                       child: RaisedButton(
                         splashColor: Colors.greenAccent,
 
-                        onPressed: () async {
+                        onPressed: () {
                           // Validate returns true if the form is valid, or false
                           // otherwise.
                           if (_formKey.currentState.validate()) {
                             // If the form is valid, display a Snackbar.
                             print(BudgetName.text);
-                            this.budgets.add(Budgets(text: BudgetName.text,
-                                value: BudgetValue.text));
-
-                            //Write to the DB
-                            //add to db
-                            // await  Firestore.instance.collection('users').document("OmarMoharrem").setData({'Allocation':cash.cashValue});
-//                            await  Firestore.instance.collection('users').document("OmarMoharrem").collection('Budgets').add({
-//                              'budgetName':BudgetName.text,
-//                              'budgetValue':BudgetValue.text
-//                            });
+                            setState(() {
+                              this.budgets.add(Budgets(text: BudgetName.text,
+                                  value: BudgetValue.text));
+                            });
 
 
                             controller.AddBudget({
@@ -247,10 +247,27 @@ class NewBudget extends State<AddNewBudget> {
                                 'omarmoharrem');
 
 
+//                                 setState(() {
+//                                    budgets.add(Budgets(text:BudgetName.text,value:BudgetValue.text,spent:"0.0"));
+//                                  });
+
+
+                            // Navigator.popUntil(context, ModalRoute.withName('/home'));
+                            Navigator.of(context).pop();
+                            Navigator.popAndPushNamed(context, '/budgeter',
+                                arguments: {
+                                  "budgets": this.budgets,
+                                  "cash": cash
+                                });
 
 
                             //pass the context back budgets
-                            Navigator.pop(context, '/budgeter');
+//                            Navigator.pop(context, '/budgeter');
+//                            Navigator.pushNamed(context, '/home',
+//                                arguments: {
+//                                  "budgets": budgets,
+//                                  "cash": cashInHand.cashValue
+//                                });
                             // Navigator.popAndPushNamed(context, routeName)
                           }
                         },
@@ -348,10 +365,24 @@ class NewBudget extends State<AddNewBudget> {
                           if (_cash.currentState.validate()) {
                             // If the form is valid, display a Snackbar.
                             //print(BudgetName.text);
-                            cash.cashValue = BudgetCash.text;
+                            this.cash.cashValue = BudgetCash.text;
+                            controller.UpdateAllocation(
+                                {'Allocations': cash.cashValue},
+                                'omarmoharrem');
+
+
+
                             //this.budgets.add(Budgets(text:BudgetName.text,value:BudgetValue.text));
                             //pass the context back budgets
-                            Navigator.pop(context, '/budgeter');
+                            //Navigator.pop(context, '/budgeter');
+                            Navigator.pop(context, () {
+                              setState(() {
+                                this.cash.cashValue = BudgetCash.text;
+                              });
+                            });
+
+                            //Navigator.pop(context, '/budgeter');
+                            // Navigator.pop(context,  this.cash.cashValue );
                             // Navigator.popAndPushNamed(context, routeName)
                           }
 
@@ -364,6 +395,7 @@ class NewBudget extends State<AddNewBudget> {
                             //pass the context back budgets
                             //this.cash.cashValue =  BudgetCash.text;
                             Navigator.pop(context, '/budgeter');
+
                             //Navigator.pushNamed(context, '/', arguments: {"cash": BudgetCash.text});
                             // Navigator.popAndPushNamed(context, routeName)
                           }

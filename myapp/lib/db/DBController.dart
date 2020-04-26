@@ -109,13 +109,15 @@ class Dbcontroller {
         Cash cashInHand;
 
         userQuery.get().then((data) {
-          if (data.data.length > 0) {
+          if (data.data != null) {
             cashInHand = new Cash(cashValue: data.data["Allocations"]);
             //print(data.data["Allocations"]);
           }
+          else {
+            cashInHand = new Cash(cashValue: "0.0");
+          }
+          dataReturned['Allocation'] = cashInHand;
         });
-
-
         //print(budgets);
         dataReturned['Budgets'] = budgets;
         // print(dataReturned);
@@ -133,9 +135,12 @@ class Dbcontroller {
     Cash cashInHand;
 
     await userQuery.get().then((data) {
-      if (data.data.length > 0) {
+      if (data.data != null) {
         cashInHand = new Cash(cashValue: data.data["Allocations"]);
         //print(data.data["Allocations"]);
+      }
+      else {
+        cashInHand = new Cash(cashValue: "0.0");
       }
       dataReturned['Allocation'] = cashInHand;
     });

@@ -24,6 +24,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
   cloud_firestore: ^0.13.4+2
+  firebase_auth:
   flutter_signin_button: ^0.2.2
   flutter_auth_buttons: any
 
@@ -32,14 +33,17 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   percent_indicator: "^2.1.1"
-
+  flutter_facebook_login: ^2.0.0
   flutter_launcher_icons: ^0.7.4
+  flutter_launcher_name: "^0.0.1"
 
 flutter_icons:
-  image_path: "Assets/logo.png"
+  image_path: "Assets/icon/logo.png"
   ios: true
-  android: true
+  android: "launcher_icon"
 
+flutter_launcher_name:
+  name: "Budgit"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

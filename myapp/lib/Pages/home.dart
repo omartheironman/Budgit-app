@@ -4,7 +4,7 @@ import 'AddBudget.dart';
 import 'NewBudget.dart';
 import 'login.dart';
 import 'package:percent_indicator/percent_indicator.dart';
-
+import 'package:myapp/db/DBController.dart';
 class Home extends StatefulWidget {
   _HomeState createState() => _HomeState();
 }
@@ -12,8 +12,9 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
 
 
-  Cash cashInHand = new Cash(cashValue: "0");
+  Cash cashInHand;
 
+  double TotalSpent = 0.0;
   //Fetch all the budgets from the database ...
   List<Budgets> budgets = [
 //        Budgets(text:'Shopping',value:'500'),
@@ -26,13 +27,38 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    print("I am at home");
+    //Fetch totalSpent0
+
     Map mapdata = ModalRoute
         .of(context)
         .settings
         .arguments;
 
-    String currentCash = mapdata['cash'];
-    budgets = mapdata['budgets'];
+
+    this.cashInHand = mapdata['cash'];
+    this.budgets = mapdata['budgets'];
+
+
+    var LeftOver = double.parse(cashInHand.cashValue);
+    //if(this.budgets!=null) {
+    this.TotalSpent = Budgets().GetTotalSpent(this.budgets);
+    print("Total spent");
+    print(TotalSpent);
+    // }
+
+    var percent = 0.0;
+    if (this.TotalSpent != null) {
+      percent = TotalSpent / (LeftOver + TotalSpent);
+      print("spent percent");
+      print(percent);
+    }
+
+    setState(() {
+      this.cashInHand = mapdata['cash'];
+    });
+
+
     return Scaffold(
       backgroundColor: Color.fromRGBO(243, 53, 53, 1.0),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -82,7 +108,7 @@ class _HomeState extends State<Home> {
                 )),
             SizedBox(height: 10.0),
 
-            Text("\$$currentCash",
+            Text("\$$LeftOver",
                 style: TextStyle(
                     color: Colors.white,
                     letterSpacing: 2.0,
@@ -99,7 +125,7 @@ class _HomeState extends State<Home> {
               new CircularPercentIndicator(
                   radius: 200.0,
                   lineWidth: 10.0,
-                  percent: 0.8,
+                  percent: percent,
                   center: new Icon(
                     Icons.account_balance,
                     size: 100.0,
@@ -159,6 +185,7 @@ class _HomeState extends State<Home> {
           color: Colors.blueGrey,
         ),
         onPressed: () {
+          // Navigator.popAndPushNamed(context, routeName)
           Navigator.pushNamed(context, '/budgeter',
               arguments: {"budgets": this.budgets, "cash": this.cashInHand});
         },

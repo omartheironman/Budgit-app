@@ -20,7 +20,7 @@ class _BudgeterState extends State<Budgeter> {
   final toSpend = TextEditingController();
   TextEditingController _textFieldController = TextEditingController();
 
-  _displayDialog(BuildContext context) async {
+  _displayDialog(BuildContext context) {
     return showDialog(
         context: context,
 
@@ -40,8 +40,9 @@ class _BudgeterState extends State<Budgeter> {
               new FlatButton(
                 child: new Text('Add'),
                 onPressed: () {
-                  Navigator.of(context).pop();
-                  Navigator.pushNamed(context, '/AddNew',
+                  // Navigator.of(context).pop();
+                  // Navigator.of(contet).popAndPushNamed(routeName);
+                  Navigator.popAndPushNamed(context, '/AddNew',
                       arguments: {"budgets": this.budgets, "cash": this.cash});
                 },
               )
@@ -138,10 +139,13 @@ class _BudgeterState extends State<Budgeter> {
         .of(context)
         .settings
         .arguments;
-    budgets = mapdata['budgets'];
-    cash = mapdata['cash'];
+    this.budgets = mapdata['budgets'];
+    this.cash = mapdata['cash'];
 
-    print("CASH IN HAND");
+    setState(() {
+      this.cash = mapdata['cash'];
+    });
+    print("CASH IN HAND^^^^^^^^^^^^");
     print(cash.cashValue);
     //controller.UpdateAllocation({'Allocations':cash.cashValue},'omarmoharrem');
     // set up the button
@@ -189,7 +193,9 @@ class _BudgeterState extends State<Budgeter> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
 
+
               children: budgets.map((bdgts) => budgetToCard(bdgts)).toList(),
+
             ),
 
             SizedBox(height: 10.0),
