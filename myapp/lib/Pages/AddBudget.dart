@@ -17,6 +17,7 @@ class _BudgeterState extends State<Budgeter> {
 
   List<Budgets> budgets;
   Cash cash;
+  String userId;
   final toSpend = TextEditingController();
   TextEditingController _textFieldController = TextEditingController();
 
@@ -43,7 +44,11 @@ class _BudgeterState extends State<Budgeter> {
                   // Navigator.of(context).pop();
                   // Navigator.of(contet).popAndPushNamed(routeName);
                   Navigator.popAndPushNamed(context, '/AddNew',
-                      arguments: {"budgets": this.budgets, "cash": this.cash});
+                      arguments: {
+                        "budgets": this.budgets,
+                        "cash": this.cash,
+                        "userId": this.userId
+                      });
                 },
               )
             ],
@@ -141,7 +146,7 @@ class _BudgeterState extends State<Budgeter> {
         .arguments;
     this.budgets = mapdata['budgets'];
     this.cash = mapdata['cash'];
-
+    this.userId = mapdata['userId'];
     setState(() {
       this.cash = mapdata['cash'];
     });
@@ -288,13 +293,13 @@ class _BudgeterState extends State<Budgeter> {
                 setState(() {
                   this.budgets.remove(itemsToSpend);
                   //Add the deleted item's budget back to the total cash...
-                  controller.DeleteBudget(itemsToSpend.text, 'omarmoharrem');
+                  controller.DeleteBudget(itemsToSpend.text, this.userId);
                 });
                 cash.cashValue = (double.parse(cash.cashValue) +
                     double.parse(itemsToSpend.value)).toString();
                 controller.UpdateAllocation(
                     {'Allocations': cash.cashValue},
-                    'omarmoharrem');
+                    this.userId);
                 Navigator.pop(context);
 //                Navigator.popAndPushNamed(context, '/budgeter',
 //                    arguments: {"budgets": this.budgets, "cash": this.cash});
@@ -330,7 +335,7 @@ class _BudgeterState extends State<Budgeter> {
 //                Navigator.popAndPushNamed(context, '/budgeter',
 //                    arguments: {"budgets": this.budgets, "cash": this.cash});
                 controller.UpdateBudget(
-                    itemsToSpend.text, itemsToSpend.spent, 'omarmoharrem');
+                    itemsToSpend.text, itemsToSpend.spent, this.userId);
               })
         ],
       ),

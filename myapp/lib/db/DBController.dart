@@ -17,7 +17,7 @@ class Dbcontroller {
       String budgetName, String spentVal, String user) async {
     var userQuery = Firestore.instance
         .collection('users')
-        .document('omarmoharrem')
+        .document(user)
         .collection('Budgets')
         .where('budgetName', isEqualTo: budgetName)
         .limit(1);
@@ -78,6 +78,7 @@ class Dbcontroller {
 
   Future<Map<String, dynamic>> GetBudgets(String user) async {
     Map<String, dynamic> dataReturned = new Map<String, dynamic>();
+
 
     //Fetch first the allocation
     var userQuery = Firestore.instance

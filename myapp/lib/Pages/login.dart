@@ -6,6 +6,7 @@ import 'budgets.dart';
 import 'package:myapp/db/DBController.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SignIn extends StatefulWidget {
   @override
@@ -17,7 +18,11 @@ class loginpagestate extends State<SignIn> with SingleTickerProviderStateMixin {
   Animation<double> _iconAnimation;
   final Dbcontroller controller = new Dbcontroller();
 
+
   FacebookLogin fbLogin = new FacebookLogin();
+  bool isLoggedIn = false;
+  String name = '';
+
 
   @override
   void initState() {
@@ -31,6 +36,70 @@ class loginpagestate extends State<SignIn> with SingleTickerProviderStateMixin {
 
     _iconAnimation.addListener(() => this.setState(() {}));
     _iconAnimationController.forward();
+    autoLogIn();
+  }
+
+  void autoLogIn() async {
+    print("IN AUTO LOGIN");
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String userId = prefs.getString('user');
+
+    if (userId != null) {
+      setState(() {
+        isLoggedIn = true;
+
+        fetchData(userId);
+        name = userId;
+
+        print("Found username");
+        print(name);
+      });
+      return;
+    }
+  }
+
+  void fetchData(String userID) async {
+    //Query the budgets from online and pass it to the next context
+    List<Budgets> budgets = new List<
+        Budgets>();
+    //var results = await controller.GetBudgets("omarmoharrem");
+    await controller.GetBudgets(userID)
+        .then((result) {
+      // print(result["Budgets"]);
+
+      Cash cashInHand = new Cash();
+      cashInHand.cashValue = "0.0";
+      if (result["Budgets"] != null) {
+        budgets = result["Budgets"];
+      }
+      if (result["Allocation"] != null) {
+        cashInHand = result["Allocation"];
+      }
+      print("Cash From DB");
+      print(cashInHand.cashValue);
+
+      Navigator.popAndPushNamed(context, '/home',
+          arguments: {
+            "budgets": budgets,
+            "cash": cashInHand,
+            "userId": userID
+          });
+
+      //setState(() {
+      // print(result);
+      //});
+    });
+
+//    Cash cashInHand = new Cash();
+//    cashInHand.cashValue = "0.0";
+//    Navigator.popAndPushNamed(context, '/home',
+//        arguments: {
+//          "budgets": budgets,
+//          "cash": cashInHand
+//        });
+
+
+    return;
   }
 
   @override
@@ -126,32 +195,23 @@ class loginpagestate extends State<SignIn> with SingleTickerProviderStateMixin {
                                       child: new Text("LogIn"),
                                       color: Colors.white,
                                       onPressed: () async {
-                                        //Query the budgets from online and pass it to the next context
+                                        final SharedPreferences prefs = await SharedPreferences
+                                            .getInstance();
+                                        final String userId = prefs.getString(
+                                            'user');
 
-                                        //var results = await controller.GetBudgets("omarmoharrem");
-                                        await controller.GetBudgets("omarmoharrem")
-                                            .then((result) {
-                                          // print(result["Budgets"]);
-                                          List<Budgets> budgets = new List<
-                                              Budgets>();
+                                        if (userId != null) {
+                                          setState(() {
+                                            isLoggedIn = true;
 
-                                          if (result["Budgets"] != null) {
-                                            budgets = result["Budgets"];
-                                          }
-                                          Cash cashInHand = result["Allocation"];
-                                          print("Cash From DB");
-                                          print(cashInHand.cashValue);
+                                            name = userId;
 
-                                          Navigator.pushNamed(context, '/home',
-                                              arguments: {
-                                                "budgets": budgets,
-                                                "cash": cashInHand
-                                              });
-
-                                          //setState(() {
-                                          // print(result);
-                                          //});
-                                        });
+                                            print("Found username");
+                                            print(name);
+                                            fetchData(name);
+                                          });
+                                          return;
+                                        }
 
                                         //Cash cashInHand = new Cash(cashValue: "0");
                                         //Navigator.pushNamed(context, '/home', arguments: {"budgets": budgets, "cash": cashInHand});
@@ -176,6 +236,12 @@ class loginpagestate extends State<SignIn> with SingleTickerProviderStateMixin {
                                 Buttons.Facebook,
                                 mini: false,
                                 onPressed: () async {
+                                  SharedPreferences prefs = await SharedPreferences
+                                      .getInstance();
+
+                                  //Query local storage for the token
+
+
                                   final facebookLoginResult = await fbLogin
                                       .logInWithReadPermissions(
                                       ['email', 'public_profile']);
@@ -198,7 +264,13 @@ class loginpagestate extends State<SignIn> with SingleTickerProviderStateMixin {
                                   print("TOKEEEN ########## " +
                                       myToken.token.toString());
 
-                                  print(firebaseUser.email);
+
+                                  print(firebaseUser.uid);
+                                  prefs.setString("user", firebaseUser.uid);
+                                  fetchData(firebaseUser.uid);
+                                  //Pass to next view the username;
+
+
                                 },
                               ),
                               Divider(),

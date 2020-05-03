@@ -13,6 +13,7 @@ class _HomeState extends State<Home> {
 
 
   Cash cashInHand;
+  String userId;
 
   double TotalSpent = 0.0;
   //Fetch all the budgets from the database ...
@@ -27,8 +28,7 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    print("I am at home");
-    //Fetch totalSpent0
+
 
     Map mapdata = ModalRoute
         .of(context)
@@ -38,7 +38,11 @@ class _HomeState extends State<Home> {
 
     this.cashInHand = mapdata['cash'];
     this.budgets = mapdata['budgets'];
+    this.userId = mapdata['userId'];
 
+    print("USER IDDDD");
+    //Fetch totalSpent0
+    print(userId);
 
     var LeftOver = double.parse(cashInHand.cashValue);
     //if(this.budgets!=null) {
@@ -56,6 +60,7 @@ class _HomeState extends State<Home> {
 
     setState(() {
       this.cashInHand = mapdata['cash'];
+      this.userId = mapdata['userId'];
     });
 
 
@@ -186,8 +191,14 @@ class _HomeState extends State<Home> {
         ),
         onPressed: () {
           // Navigator.popAndPushNamed(context, routeName)
+          print("sending user");
+          print(this.userId);
           Navigator.pushNamed(context, '/budgeter',
-              arguments: {"budgets": this.budgets, "cash": this.cashInHand});
+              arguments: {
+                "budgets": this.budgets,
+                "cash": this.cashInHand,
+                "userId": this.userId
+              });
         },
       ),
       bottomNavigationBar: BottomAppBar(

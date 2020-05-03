@@ -17,7 +17,7 @@ class NewBudget extends State<AddNewBudget> {
   final Dbcontroller controller = new Dbcontroller();
   bool _value1 = false;
   void _value1Changed(bool value) => setState(() => _value1 = value);
-
+  String userId;
   List<Budgets> budgets;
   Cash cash;
 
@@ -75,8 +75,10 @@ class NewBudget extends State<AddNewBudget> {
 
     Map mapdata =ModalRoute.of(context).settings.arguments;
     budgets= mapdata['budgets'];
+    this.userId = mapdata['userId'];
 
-
+    print("USER IDDDDDDD");
+    print(this.userId);
     cash = mapdata['cash'];
     print("CASHHH");
     print(cash.cashValue);
@@ -241,10 +243,10 @@ class NewBudget extends State<AddNewBudget> {
                               'budgetName': BudgetName.text,
                               'budgetValue': BudgetValue.text,
                               'spent': '0.0'
-                            }, 'omarmoharrem');
+                            }, this.userId);
                             controller.UpdateAllocation(
                                 {'Allocations': cash.cashValue},
-                                'omarmoharrem');
+                                this.userId);
 
 
 //                                 setState(() {
@@ -257,7 +259,8 @@ class NewBudget extends State<AddNewBudget> {
                             Navigator.popAndPushNamed(context, '/budgeter',
                                 arguments: {
                                   "budgets": this.budgets,
-                                  "cash": cash
+                                  "cash": cash,
+                                  "userId": this.userId
                                 });
 
 
@@ -368,7 +371,7 @@ class NewBudget extends State<AddNewBudget> {
                             this.cash.cashValue = BudgetCash.text;
                             controller.UpdateAllocation(
                                 {'Allocations': cash.cashValue},
-                                'omarmoharrem');
+                                this.userId);
 
 
 
