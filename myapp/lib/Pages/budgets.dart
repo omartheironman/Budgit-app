@@ -26,10 +26,6 @@ class Budgets{
   //Get the sum of all spent
   double GetTotalSpent(List<Budgets> budgets) {
     var total = 0.0;
-    if (budgets == null || budgets.length > 0) {
-      print("budgets is null");
-      return 0.0;
-    }
 
 
     for (var i = 0; i < budgets.length; i++) {

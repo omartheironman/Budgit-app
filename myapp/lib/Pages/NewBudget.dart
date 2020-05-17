@@ -13,14 +13,21 @@ class AddNewBudget extends StatefulWidget {
 
 class NewBudget extends State<AddNewBudget> {
 
+  int _currentSelected = 0;
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _currentSelected = index;
+    });
+  }
 
   final Dbcontroller controller = new Dbcontroller();
   bool _value1 = false;
+
   void _value1Changed(bool value) => setState(() => _value1 = value);
   String userId;
   List<Budgets> budgets;
   Cash cash;
-
 
 
   Widget budgetToCard(Budget){
@@ -72,7 +79,6 @@ class NewBudget extends State<AddNewBudget> {
 
   @override
   Widget build(BuildContext context) {
-
     Map mapdata =ModalRoute.of(context).settings.arguments;
     budgets= mapdata['budgets'];
     this.userId = mapdata['userId'];
@@ -91,9 +97,6 @@ class NewBudget extends State<AddNewBudget> {
     //final CheckBox =   CheckboxInputElement();
 
 
-
-
-
     // show the dialog
 
 
@@ -103,6 +106,7 @@ class NewBudget extends State<AddNewBudget> {
       backgroundColor: Color.fromRGBO(243, 53, 53, 1.0),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       appBar: AppBar(
+
         title: Text("Budgit", style: TextStyle(
           //color: Colors.white,
           fontFamily: 'Sairafont',)),
@@ -286,23 +290,31 @@ class NewBudget extends State<AddNewBudget> {
               ,
 
               SizedBox(height: 10.0),
+              Divider(),
 
-
-              Checkbox(
+              Container(
+                decoration: BoxDecoration(
+                    border: Border.all(
+                        color: Colors.white,
+                        width: 1
+                    ),
+                    borderRadius: BorderRadius.all(Radius.circular(3))
+                ),
+                //width: 24,
+                // height: 24,
+                child: CheckboxListTile(
+                  title: Text("Adjust Budget",
+                      style: TextStyle(color: Colors.white70,
+                        fontFamily: 'Sairafont',)),
                   value: _value1,
-
-                  activeColor: Colors.greenAccent,
-                  materialTapTargetSize: MaterialTapTargetSize.padded,
 
                   onChanged: (bool newValue) {
                     setState(() {
                       _value1 = newValue;
-
-
                       //print(_cash.currentContext.describeWidget('Form').);
-
                     });
-                  }
+                  },
+                ),
               ),
 
 
@@ -374,7 +386,6 @@ class NewBudget extends State<AddNewBudget> {
                                 this.userId);
 
 
-
                             //this.budgets.add(Budgets(text:BudgetName.text,value:BudgetValue.text));
                             //pass the context back budgets
                             //Navigator.pop(context, '/budgeter');
@@ -413,7 +424,6 @@ class NewBudget extends State<AddNewBudget> {
                   ],
                 ),
               ) : Container()
-
 
 
 //            Column(
@@ -487,16 +497,20 @@ class NewBudget extends State<AddNewBudget> {
         onPressed: (){},
       ),
 
-      bottomNavigationBar: BottomAppBar(
+
+      bottomNavigationBar:
+      BottomAppBar(
         shape: CircularNotchedRectangle(),
+
         child: new Row(
+
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             IconButton(
               icon: Icon(Icons.menu),
               color: Colors.white,
-              onPressed: () {},
+              onPressed: _showModal,
             ),
             IconButton(
               icon: Icon(Icons.search),
@@ -510,6 +524,42 @@ class NewBudget extends State<AddNewBudget> {
 
     );
   }
+
+  void _showModal() {
+    showModalBottomSheet<void>(
+        context: context,
+        builder: (BuildContext context) {
+          return new Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              new ListTile(
+                leading: new Icon(Icons.airplanemode_active),
+                title: new Text('Vacation Deals (5)'),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+              new ListTile(
+                leading: new Icon(Icons.local_grocery_store),
+                title: new Text('Grocery sales (2)'),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+              new ListTile(
+                leading: new Icon(Icons.card_giftcard),
+                title: new Text('Affordable gifts (1)'),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          );
+        }
+    );
+  }
+
+
 }
 
 

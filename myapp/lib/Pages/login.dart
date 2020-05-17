@@ -29,10 +29,10 @@ class loginpagestate extends State<SignIn> with SingleTickerProviderStateMixin {
     super.initState();
 
     _iconAnimationController = new AnimationController(
-        vsync: this, duration: new Duration(milliseconds: 500));
+        vsync: this, duration: new Duration(milliseconds: 300));
 
     _iconAnimation = new CurvedAnimation(
-        parent: _iconAnimationController, curve: Curves.bounceOut);
+        parent: _iconAnimationController, curve: Curves.easeInQuad);
 
     _iconAnimation.addListener(() => this.setState(() {}));
     _iconAnimationController.forward();
@@ -162,14 +162,14 @@ class loginpagestate extends State<SignIn> with SingleTickerProviderStateMixin {
                                         color: Colors.white),
                                   ),
 
-                                  //keyboardType: TextInputType.emailAddress,
+                                  keyboardType: TextInputType.emailAddress,
                                   style: TextStyle(
                                     fontSize: 14.0,
                                     color: Colors.black,
                                   )),
                               new TextFormField(
                                   decoration: const InputDecoration(
-                                    labelText: 'Enter Name',
+                                    labelText: 'Enter Password',
                                     enabledBorder: UnderlineInputBorder(
                                       borderSide: BorderSide(color: Colors.white),
                                     ),
@@ -179,7 +179,7 @@ class loginpagestate extends State<SignIn> with SingleTickerProviderStateMixin {
                                         color: Colors.white),
                                   ),
                                   //keyboardType: TextInputType.text,
-                                  obscureText: false,
+                                  obscureText: true,
                                   style: TextStyle(
                                     fontSize: 14.0,
                                     color: Colors.black,
@@ -192,7 +192,7 @@ class loginpagestate extends State<SignIn> with SingleTickerProviderStateMixin {
                                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                 children: <Widget>[
                                   new RaisedButton(
-                                      child: new Text("LogIn"),
+                                      child: new Text("Sign In"),
                                       color: Colors.white,
                                       onPressed: () async {
                                         final SharedPreferences prefs = await SharedPreferences
@@ -213,12 +213,10 @@ class loginpagestate extends State<SignIn> with SingleTickerProviderStateMixin {
                                           return;
                                         }
 
-                                        //Cash cashInHand = new Cash(cashValue: "0");
-                                        //Navigator.pushNamed(context, '/home', arguments: {"budgets": budgets, "cash": cashInHand});
-                                        // arguments: {"budgets": this.budgets, "cash": this.cashInHand});
+
                                       }),
                                   new RaisedButton(
-                                    child: new Text("SignUp"),
+                                    child: new Text("Sign Up"),
                                     color: Colors.white,
                                     onPressed: () {},
                                   ),

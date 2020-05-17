@@ -4,6 +4,7 @@ import 'Pages/budgets.dart';
 import 'Pages/AddBudget.dart';
 import 'Pages/NewBudget.dart';
 import 'Pages/login.dart';
+import 'Pages/splashscreen.dart';
 import 'Pages/home.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
@@ -12,7 +13,8 @@ void main() => runApp(MaterialApp(
 
   initialRoute: '/',
   routes: {
-    '/': (context) => SignIn(),
+    '/': (context) => SplashScreen(),
+    '/SignIn': (context) => SignIn(),
     '/home': (context) => Home(),
     '/budgeter' : (context) => Budgeter(),
     '/AddNew'  : (context) => AddNewBudget()

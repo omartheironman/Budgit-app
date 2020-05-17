@@ -230,7 +230,7 @@ class _BudgeterState extends State<Budgeter> {
             IconButton(
               icon: Icon(Icons.menu),
               color: Colors.white,
-              onPressed: () {},
+              onPressed: _showModal,
             ),
             IconButton(
               icon: Icon(Icons.search),
@@ -242,6 +242,40 @@ class _BudgeterState extends State<Budgeter> {
         color: Colors.grey,
       ),
 
+    );
+  }
+
+  void _showModal() {
+    showModalBottomSheet<void>(
+        context: context,
+        builder: (BuildContext context) {
+          return new Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              new ListTile(
+                leading: new Icon(Icons.airplanemode_active),
+                title: new Text('Vacation Deals (5)'),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+              new ListTile(
+                leading: new Icon(Icons.local_grocery_store),
+                title: new Text('Grocery sales (2)'),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+              new ListTile(
+                leading: new Icon(Icons.card_giftcard),
+                title: new Text('Affordable gifts (1)'),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          );
+        }
     );
   }
 

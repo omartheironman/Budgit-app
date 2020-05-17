@@ -45,11 +45,11 @@ class _HomeState extends State<Home> {
     print(userId);
 
     var LeftOver = double.parse(cashInHand.cashValue);
-    //if(this.budgets!=null) {
-    this.TotalSpent = Budgets().GetTotalSpent(this.budgets);
-    print("Total spent");
-    print(TotalSpent);
-    // }
+    if (this.budgets != null) {
+      this.TotalSpent = Budgets().GetTotalValues(this.budgets);
+      print("Total spent");
+      print(TotalSpent);
+    }
 
     var percent = 0.0;
     if (this.TotalSpent != null) {
@@ -68,6 +68,7 @@ class _HomeState extends State<Home> {
       backgroundColor: Color.fromRGBO(243, 53, 53, 1.0),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Text("Budgit",
             style: TextStyle(
               //color: Colors.white,
@@ -84,24 +85,24 @@ class _HomeState extends State<Home> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text('NAME',
-                style: TextStyle(
-                  color: Colors.white70,
-                  letterSpacing: 2.0,
-                  fontFamily: 'Sairafont',
-                  //fontSize: 20.0,
-                )),
+//            Text('NAME',
+//                style: TextStyle(
+//                  color: Colors.white70,
+//                  letterSpacing: 2.0,
+//                  fontFamily: 'Sairafont',
+//                  //fontSize: 20.0,
+//                )),
 
             SizedBox(height: 10.0),
-            Text('Omar Moharrem',
-                style: TextStyle(
-                    color: Colors.white,
-                    fontFamily: 'Sairafont',
-                    letterSpacing: 2.0,
-                    //letterSpacing: 2.0,
-                    fontSize: 30.0,
-                    fontWeight: FontWeight.bold)
-            ),
+//            Text('Omar Moharrem',
+//                style: TextStyle(
+//                    color: Colors.white,
+//                    fontFamily: 'Sairafont',
+//                    letterSpacing: 2.0,
+//                    //letterSpacing: 2.0,
+//                    fontSize: 30.0,
+//                    fontWeight: FontWeight.bold)
+//            ),
 
             SizedBox(height: 10.0),
             Text('Left to Spend',
@@ -210,7 +211,7 @@ class _HomeState extends State<Home> {
             IconButton(
               icon: Icon(Icons.menu),
               color: Colors.white,
-              onPressed: () {},
+              onPressed: _showModal,
             ),
             IconButton(
               icon: Icon(Icons.search),
@@ -223,7 +224,46 @@ class _HomeState extends State<Home> {
       ),
     );
   }
+
+
+  void _showModal() {
+    showModalBottomSheet<void>(
+        context: context,
+        builder: (BuildContext context) {
+          return new Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              new ListTile(
+                leading: new Icon(Icons.airplanemode_active),
+                title: new Text('Vacation Deals (5)'),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+              new ListTile(
+                leading: new Icon(Icons.local_grocery_store),
+                title: new Text('Grocery sales (2)'),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+              new ListTile(
+                leading: new Icon(Icons.card_giftcard),
+                title: new Text('Affordable gifts (1)'),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          );
+        }
+    );
+  }
+
+
 }
+
+
 
 class BudgetsWidgets extends StatefulWidget {
   final Budgets bdg;
