@@ -12,8 +12,8 @@ Not just that I wanted to also leverage other ideas to show me deals to spent th
 Budgit was written in Dart to support iOS and Android, the backend database used its firebase hosted by google. 
 
 
-![alt text][(https://github.com/omartheironman/Budgit-app/blob/master/docs/Dash.png?raw=true](Main))
+![alt text][(docs/Dash.png?raw=true])
 
 
 
-![alt text][(https://github.com/omartheironman/Budgit-app/blob/master/docs/Dash.png?raw=true](Dashboard))
+![alt text][(/docs/Dash.png?raw=true])
