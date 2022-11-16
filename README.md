@@ -16,4 +16,4 @@ Budgit was written in Dart to support iOS and Android, the backend database used
 
 
 
-![alt text][(./docs/Dash.png?raw=true])
+![Alt text](./docs/Dash.png?raw=true "Title")
